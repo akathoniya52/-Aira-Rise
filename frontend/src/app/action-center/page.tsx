@@ -75,26 +75,32 @@ export default function ActionCenterPage() {
           {/* Left Column: Interventions */}
           <div className="lg:col-span-8 flex flex-col gap-3 sm:gap-4">
             {/* Filter Tabs */}
-            <div className="flex items-center gap-1.5 bg-surface-container-lowest p-1.5 rounded-xl border border-outline-variant/20 shadow-xs text-xs font-mono font-medium overflow-x-auto">
+            <div role="tablist" aria-label="Intervention Status Filter" className="flex items-center gap-1.5 bg-surface-container-lowest p-1.5 rounded-xl border border-outline-variant/20 shadow-xs text-xs font-mono font-medium overflow-x-auto">
               <button
+                role="tab"
+                aria-selected={filter === 'all'}
                 onClick={() => setFilter('all')}
-                className={`px-3 py-1 rounded-lg transition-colors whitespace-nowrap ${
+                className={`px-3 py-1 rounded-lg transition-colors whitespace-nowrap focus-visible:ring-2 focus-visible:ring-primary ${
                   filter === 'all' ? 'bg-primary text-on-primary font-bold' : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
                 All ({interventions.length})
               </button>
               <button
+                role="tab"
+                aria-selected={filter === 'pending'}
                 onClick={() => setFilter('pending')}
-                className={`px-3 py-1 rounded-lg transition-colors whitespace-nowrap ${
+                className={`px-3 py-1 rounded-lg transition-colors whitespace-nowrap focus-visible:ring-2 focus-visible:ring-primary ${
                   filter === 'pending' ? 'bg-primary text-on-primary font-bold' : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
                 Pending Dispatch
               </button>
               <button
+                role="tab"
+                aria-selected={filter === 'progress'}
                 onClick={() => setFilter('progress')}
-                className={`px-3 py-1 rounded-lg transition-colors whitespace-nowrap ${
+                className={`px-3 py-1 rounded-lg transition-colors whitespace-nowrap focus-visible:ring-2 focus-visible:ring-primary ${
                   filter === 'progress' ? 'bg-primary text-on-primary font-bold' : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >

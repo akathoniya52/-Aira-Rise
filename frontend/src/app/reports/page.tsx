@@ -179,8 +179,9 @@ export default function ReportsStudioPage() {
 
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
-                  <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Geographic Target</label>
+                  <label htmlFor="geo-target" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Geographic Target</label>
                   <input
+                    id="geo-target"
                     type="text"
                     readOnly
                     value="Ward F-North (Mumbai)"
@@ -188,8 +189,9 @@ export default function ReportsStudioPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Telemetry Data Range</label>
+                  <label htmlFor="telemetry-range" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Telemetry Data Range</label>
                   <input
+                    id="telemetry-range"
                     type="text"
                     readOnly
                     value="Last 24 Hours (Live)"
@@ -200,27 +202,36 @@ export default function ReportsStudioPage() {
 
               {/* Comprehension Level */}
               <div className="pt-2">
-                <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Comprehension Level & Tone</label>
-                <div className="grid grid-cols-3 gap-1.5 mt-1">
+                <span id="comprehension-label" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Comprehension Level & Tone</span>
+                <div role="radiogroup" aria-labelledby="comprehension-label" className="grid grid-cols-3 gap-1.5 mt-1">
                   <button
+                    type="button"
+                    role="radio"
+                    aria-checked={comprehensionLevel === 'simple'}
                     onClick={() => setComprehensionLevel('simple')}
-                    className={`py-1.5 px-2 rounded text-xs font-semibold border ${
+                    className={`py-1.5 px-2 rounded text-xs font-semibold border focus-visible:ring-2 focus-visible:ring-primary ${
                       comprehensionLevel === 'simple' ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container text-on-surface'
                     }`}
                   >
                     Simple (Grade 6)
                   </button>
                   <button
+                    type="button"
+                    role="radio"
+                    aria-checked={comprehensionLevel === 'standard'}
                     onClick={() => setComprehensionLevel('standard')}
-                    className={`py-1.5 px-2 rounded text-xs font-semibold border ${
+                    className={`py-1.5 px-2 rounded text-xs font-semibold border focus-visible:ring-2 focus-visible:ring-primary ${
                       comprehensionLevel === 'standard' ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container text-on-surface'
                     }`}
                   >
                     Standard Civic
                   </button>
                   <button
+                    type="button"
+                    role="radio"
+                    aria-checked={comprehensionLevel === 'technical'}
                     onClick={() => setComprehensionLevel('technical')}
-                    className={`py-1.5 px-2 rounded text-xs font-semibold border ${
+                    className={`py-1.5 px-2 rounded text-xs font-semibold border focus-visible:ring-2 focus-visible:ring-primary ${
                       comprehensionLevel === 'technical' ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container text-on-surface'
                     }`}
                   >
@@ -230,13 +241,18 @@ export default function ReportsStudioPage() {
               </div>
 
               {/* Include AI Telemetry Evidence Checkbox */}
-              <div className="p-2.5 rounded bg-surface-container-low/50 border border-outline-variant/20 flex items-center gap-2 mt-2">
-                <input type="checkbox" defaultChecked className="rounded text-primary focus:ring-primary h-4 w-4" />
+              <label htmlFor="include-ai-evidence" className="p-2.5 rounded bg-surface-container-low/50 border border-outline-variant/20 flex items-center gap-2 mt-2 cursor-pointer">
+                <input
+                  id="include-ai-evidence"
+                  type="checkbox"
+                  defaultChecked
+                  className="rounded text-primary focus:ring-2 focus:ring-primary h-4 w-4"
+                />
                 <div className="text-[11px] leading-tight">
                   <strong className="text-primary font-bold">Include AI Telemetry Evidence</strong>
                   <div className="text-on-surface-variant">Attach CPCB Station 018 verification logs & IMD micro-climate wind vector arrays.</div>
                 </div>
-              </div>
+              </label>
 
               {/* Generate Button */}
               <button

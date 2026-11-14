@@ -36,37 +36,42 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <form onSubmit={handleRegister} className="flex flex-col gap-space-sm text-xs">
+        <form onSubmit={handleRegister} className="flex flex-col gap-space-sm text-xs" aria-label="Division registration form">
           <div>
-            <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Officer / User Name</label>
+            <label htmlFor="register-name" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Officer / User Name</label>
             <input
+              id="register-name"
               type="text"
               required
+              autoComplete="name"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="e.g. Officer Sharma"
-              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface font-mono text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface font-mono text-xs focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
           <div>
-            <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Official Email</label>
+            <label htmlFor="register-email" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Official Email</label>
             <input
+              id="register-email"
               type="email"
               required
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="sharma@bmc.gov.in"
-              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface font-mono text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface font-mono text-xs focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
           <div>
-            <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Civic Operational Role</label>
+            <label htmlFor="register-role" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Civic Operational Role</label>
             <select
+              id="register-role"
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value as UserRole)}
-              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface font-mono text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface font-mono text-xs focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="ward_officer">Municipal Ward Officer</option>
               <option value="housing_admin">Housing Society Administrator</option>

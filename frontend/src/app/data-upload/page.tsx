@@ -181,32 +181,44 @@ export default function DataUploadPage() {
         {/* MAIN UPLOAD / PASTE SECTION */}
         <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/20 shadow-xs overflow-hidden">
           {/* Tabs */}
-          <div className="flex border-b border-outline-variant/15 bg-surface/40 px-3 sm:px-4 pt-2">
+          <div role="tablist" aria-label="Data Ingestion Methods" className="flex border-b border-outline-variant/15 bg-surface/40 px-3 sm:px-4 pt-2">
             <button
+              role="tab"
+              aria-selected={activeTab === 'upload'}
+              aria-controls="panel-upload"
+              id="tab-upload"
               onClick={() => setActiveTab('upload')}
-              className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-colors focus-visible:ring-2 focus-visible:ring-primary ${
                 activeTab === 'upload' ? 'border-primary text-primary font-bold' : 'border-transparent text-on-surface-variant hover:text-on-surface'
               }`}
             >
-              <span className="material-symbols-outlined text-[16px]">file_upload</span>
+              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">file_upload</span>
               File Upload (CSV / Excel)
             </button>
             <button
+              role="tab"
+              aria-selected={activeTab === 'paste'}
+              aria-controls="panel-paste"
+              id="tab-paste"
               onClick={() => setActiveTab('paste')}
-              className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-colors focus-visible:ring-2 focus-visible:ring-primary ${
                 activeTab === 'paste' ? 'border-primary text-primary font-bold' : 'border-transparent text-on-surface-variant hover:text-on-surface'
               }`}
             >
-              <span className="material-symbols-outlined text-[16px]">content_paste</span>
+              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">content_paste</span>
               Paste Tabular Data
             </button>
             <button
+              role="tab"
+              aria-selected={activeTab === 'stream'}
+              aria-controls="panel-stream"
+              id="tab-stream"
               onClick={() => setActiveTab('stream')}
-              className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-colors focus-visible:ring-2 focus-visible:ring-primary ${
                 activeTab === 'stream' ? 'border-primary text-primary font-bold' : 'border-transparent text-on-surface-variant hover:text-on-surface'
               }`}
             >
-              <span className="material-symbols-outlined text-[16px]">sensors</span>
+              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">sensors</span>
               Live Telemetry Stream
             </button>
           </div>
@@ -214,15 +226,16 @@ export default function DataUploadPage() {
           {/* Tab Content */}
           <div className="p-4 sm:p-6 flex flex-col gap-4">
             {activeTab === 'upload' ? (
-              <div className="border-2 border-dashed border-outline-variant/40 hover:border-secondary transition-colors rounded-xl p-6 sm:p-10 flex flex-col items-center justify-center text-center bg-surface/30 relative">
+              <div id="panel-upload" role="tabpanel" aria-labelledby="tab-upload" className="border-2 border-dashed border-outline-variant/40 hover:border-secondary transition-colors rounded-xl p-6 sm:p-10 flex flex-col items-center justify-center text-center bg-surface/30 relative">
                 <input
                   type="file"
                   accept=".csv,.xlsx,.xls,.json"
                   onChange={handleFileUpload}
+                  aria-label="Upload CSV, XLSX, or JSON air quality dataset"
                   className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                 />
                 <div className="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-secondary mb-2 shadow-xs">
-                  <span className="material-symbols-outlined text-[28px]">cloud_upload</span>
+                  <span className="material-symbols-outlined text-[28px]" aria-hidden="true">cloud_upload</span>
                 </div>
                 <h3 className="text-sm sm:text-base font-bold text-primary">
                   Drop your CSV file here or <span className="text-secondary underline cursor-pointer">browse file</span>
@@ -232,14 +245,15 @@ export default function DataUploadPage() {
                 </p>
               </div>
             ) : activeTab === 'paste' ? (
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-primary">Paste CSV or Tab-Separated Data:</label>
+              <div id="panel-paste" role="tabpanel" aria-labelledby="tab-paste" className="flex flex-col gap-2">
+                <label htmlFor="paste-tabular-data" className="text-xs font-bold text-primary">Paste CSV or Tab-Separated Data:</label>
                 <textarea
+                  id="paste-tabular-data"
                   rows={5}
                   value={pasteContent}
                   onChange={(e) => setPasteContent(e.target.value)}
                   placeholder="Location,Timestamp,PM2.5,PM10,Unit&#10;Sion Circle,2025-05-14 08:30,245.0,380.0,µg/m³&#10;Matunga Central,2025-05-14 08:30,54.0,110.2,µg/m³"
-                  className="w-full p-3 font-mono text-xs rounded-lg border border-outline-variant/30 bg-surface/40 focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full p-3 font-mono text-xs rounded-lg border border-outline-variant/30 bg-surface/40 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <button
                   onClick={handlePasteSubmit}
@@ -250,7 +264,7 @@ export default function DataUploadPage() {
                 </button>
               </div>
             ) : (
-              <div className="p-4 bg-surface/50 rounded-lg text-xs font-mono text-on-surface-variant">
+              <div id="panel-stream" role="tabpanel" aria-labelledby="tab-stream" className="p-4 bg-surface/50 rounded-lg text-xs font-mono text-on-surface-variant">
                 <div className="font-bold text-primary mb-1">Encrypted Telemetry Stream Active:</div>
                 <p>Endpoint: https://api.airarise.gov.in/v1/telemetry/stream (Port 4000)</p>
                 <p>Format: AES-GCM 256-bit with SHA-256 HMAC Signature Verification</p>

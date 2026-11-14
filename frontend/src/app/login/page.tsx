@@ -99,37 +99,46 @@ export default function LoginPage() {
         </div>
 
         {/* Standard Form */}
-        <form onSubmit={handleLogin} className="flex flex-col gap-space-sm text-xs">
+        <form onSubmit={handleLogin} className="flex flex-col gap-space-sm text-xs" aria-label="Sign in form">
           <div>
-            <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Email Address</label>
+            <label htmlFor="login-email" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">
+              Email Address
+            </label>
             <input
+              id="login-email"
               type="email"
               required
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="officer@airarise.test"
-              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary font-mono text-xs"
+              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary font-mono text-xs"
             />
           </div>
 
           <div>
-            <label className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">Password</label>
+            <label htmlFor="login-password" className="text-[10px] uppercase font-mono text-on-surface-variant font-bold">
+              Password
+            </label>
             <input
+              id="login-password"
               type="password"
               required
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••••••"
-              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary font-mono text-xs"
+              className="w-full mt-1 p-2.5 rounded-lg bg-surface/50 border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary font-mono text-xs"
             />
           </div>
 
           <button
             type="submit"
-            className="mt-2 w-full py-2.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-bold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5"
+            className="mt-2 w-full py-2.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-bold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary"
+            aria-label="Sign In to Environmental Command"
           >
             Sign In to Environmental Command
-            <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            <span className="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
           </button>
         </form>
 
