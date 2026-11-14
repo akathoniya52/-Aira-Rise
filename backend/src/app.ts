@@ -159,8 +159,8 @@ const computeLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// --- Health Check Endpoint ---
-app.get('/api/v1/health', (_req: Request, res: Response) => {
+// --- Health Check Endpoints (/health, /api/health, and /api/v1/health) ---
+const handleHealthCheck = (_req: Request, res: Response) => {
   res.set('Cache-Control', 'no-store');
   return sendSuccess(res, {
     status: 'ok',
@@ -170,7 +170,11 @@ app.get('/api/v1/health', (_req: Request, res: Response) => {
     service: 'AiraRise Civic Air Quality Intelligence API',
     databaseConnected: isDbConnected(),
   });
-});
+};
+
+app.get('/health', handleHealthCheck);
+app.get('/api/health', handleHealthCheck);
+app.get('/api/v1/health', handleHealthCheck);
 
 // --- Dataset Ingestion Endpoint ---
 app.post('/api/v1/datasets/paste', (req: Request, res: Response) => {

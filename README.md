@@ -77,11 +77,16 @@ npm install
 npm run build
 npm run start
 ```
-Verify the health check at **`http://localhost:4000/api/v1/health`**.
+Verify the health check at **`http://localhost:4000/health`** (or `http://localhost:4000/api/v1/health`).
 
 ### 4. Running Test Suites
 ```bash
-cd airarise/backend
+# Backend Test Suites (29 tests: Pipeline, Integration API, Security, Efficiency)
+cd backend
+npm test
+
+# Frontend Test Suites (7 tests: Gemini Service, Role Routing, Normalization)
+cd frontend
 npm test
 ```
 
