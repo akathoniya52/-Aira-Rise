@@ -45,6 +45,17 @@ export interface GeneratedReportResult {
   isAiGenerated: boolean;
 }
 
+const GEMINI_MODEL = 'gemini-3.5-flash';
+
+async function generateJsonFromModel(genAI: GoogleGenerativeAI, prompt: string): Promise<string> {
+  const model = genAI.getGenerativeModel({
+    model: GEMINI_MODEL,
+    generationConfig: { responseMimeType: 'application/json' },
+  });
+  const response = await model.generateContent(prompt);
+  return response.response.text();
+}
+
 /**
  * Executes a live Gemini API call when an API key is available,
  * or runs the validated evidence-bounded deterministic synthesis engine.
@@ -64,11 +75,6 @@ export async function analyzeTelemetryWithGemini(
   if (apiKey && apiKey.trim().length > 10) {
     try {
       const genAI = new GoogleGenerativeAI(apiKey.trim());
-      const model = genAI.getGenerativeModel({
-        model: 'gemini-1.5-flash',
-        generationConfig: { responseMimeType: 'application/json' }
-      });
-
       const prompt = `You are AiraRise Environmental Intelligence AI. Analyze this verified municipal air quality telemetry.
 Role requesting: ${role}
 Telemetry Sample (${validRows.length} rows):
@@ -105,8 +111,7 @@ Strict Truthfulness Rules:
   "limitations": ["data boundaries and weather caveats"]
 }`;
 
-      const response = await model.generateContent(prompt);
-      const text = response.response.text();
+      const text = await generateJsonFromModel(genAI, prompt);
       const parsed = JSON.parse(text);
       return parsed;
     } catch (err) {
@@ -288,11 +293,6 @@ export async function generateMultilingualReport(
   if (apiKey && apiKey.trim().length > 10) {
     try {
       const genAI = new GoogleGenerativeAI(apiKey.trim());
-      const model = genAI.getGenerativeModel({
-        model: 'gemini-1.5-flash',
-        generationConfig: { responseMimeType: 'application/json' }
-      });
-
       const langName = language === 'hi' ? 'Hindi (हिंदी)' : language === 'mr' ? 'Marathi (मराठी)' : 'English';
       const prompt = `Generate an official public environmental citizen advisory in ${langName}.
 Target Language: ${langName}
@@ -316,8 +316,8 @@ Return JSON matching:
   "sourceVerification": "CPCB-MH-MUM-018 • Dr. Anjali Sharma"
 }`;
 
-      const res = await model.generateContent(prompt);
-      const data = JSON.parse(res.response.text());
+      const text = await generateJsonFromModel(genAI, prompt);
+      const data = JSON.parse(text);
       return { ...data, isAiGenerated: true };
     } catch (e) {
       console.warn('Multilingual report generation failed on live API, using pre-validated synthesis:', e);
