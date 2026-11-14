@@ -172,6 +172,8 @@ const handleHealthCheck = (_req: Request, res: Response) => {
   });
 };
 
+app.get('/', handleHealthCheck);
+app.get('/api', handleHealthCheck);
 app.get('/health', handleHealthCheck);
 app.get('/api/health', handleHealthCheck);
 app.get('/api/v1/health', handleHealthCheck);
